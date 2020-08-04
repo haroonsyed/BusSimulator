@@ -1,0 +1,17 @@
+{
+  "name": "FinalProject",
+  "version": "1.0.0",
+  "description": "Final Project",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Zachary Allen",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^9.1.2"
+  },
+  "devDependencies": {
+    "electron-packager": "^15.0.0"
+  }
+}
