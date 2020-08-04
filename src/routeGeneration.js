@@ -59,7 +59,7 @@ function routeGeneration(start, end, busses, graph,algo){
             }
         }
         if(compare >= busses[k].capacity){
-            console.log("Bus " + busses[k].name + " has not been added to PQ for capacity reasons");
+            //console.log("Bus " + busses[k].name + " has not been added to PQ for capacity reasons");
             continue;
         }
         //if start and end are in the bus path (in order)
