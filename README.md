@@ -22,4 +22,4 @@ Car display with car color, number, passenger count, and current station
 By :
   Haroon Syed,
   Zack Allen,
-  James Horn,
+  James Horn
