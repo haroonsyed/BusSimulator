@@ -1,3 +1,4 @@
+//Made by James Horn July 2020
 function routeGeneration(start, end, busses, graph,algo){
     //use either A* or dijkstra depending on the passed string
     let aPath;
