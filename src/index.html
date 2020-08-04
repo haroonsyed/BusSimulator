@@ -75,6 +75,16 @@
         <input type="number" id="probability" min="0.1" max="1" step=".1" value="">
       </p>
 
+      <p><u>Generation Controls:</u>
+        <select name="graphGen" id="graphGen">
+          <option value = "erdos">Erdos Reyni</option>
+          <option value = "walk">Random Walk</option>
+        </select>
+        <label for="numDrawNodes">#Nodes</label>
+        <input type="number" id="numDrawNodes" min="2" max="100000" step="100">
+        <button id = "generateRandom" type="button" onclick="drawRandomGraph(graphGen.value, numDrawNodes.value)">Draw Random Graph</button>
+      </p>
+
         <table id="tableData">
           <tr>
             <th>Time</th>
@@ -84,11 +94,14 @@
           </tr>
 
         </table>
-
+      
       
       <button id="runLargeSimulation" type="button" onclick="startSim()">Start Simulation</button>
       <button id = "tableToCSV" type="button" value="disabled" onclick="dataToCSV(tableData)">Download Results as CSV</button>
       <button id = "lastGraph" type="button" value="disabled" onclick="loadPreviousGraph()">Load Previous Graph</button>
+      <br>
+      
+
       </div><!--end buttons-->
 
       <div id="displayCars">
