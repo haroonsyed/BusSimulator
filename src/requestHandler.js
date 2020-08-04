@@ -15,7 +15,7 @@ let n,requests,fireInterval,prob;
 var keepRunning = true;
 var numRequests = 100;
 //Considered as time speedup. Req/sec = 5sec/speed
-//var speed = -1;
+var speed = -1;
 //Considered as request frequency
 var constant;
 var probability = 1;
@@ -65,7 +65,7 @@ function startSim(){
         else{
             console.log("CONSOLE LOG: Generating graph. Will take approximately: " + (Math.pow(n, 2)*0.000000006).toString() +
         " seconds. If pop-ups continue to appear click \"Wait\" to continue graph building");
-            generateRandomBoundedGraph(n, 20);
+            generateRandomBoundedGraph(n, 20, false);
             console.log("CONSOLE LOG: Simulation beginning with: " + requests + " requests on a random graph with "+n+" nodes." );
             GRAPH_ = large;
         }
@@ -83,7 +83,8 @@ function startSim(){
     numRequests = requests;
     interval = 1000*fireInterval;
     probability = prob;
-    constant = document.getElementById("animationConstant").value * 2 / fireInterval;
+    speed = document.getElementById("animationConstant").value;
+    constant = speed * 2 / fireInterval;
     console.log("runSim Called");
     startTime = performance.now();
     runSim(GRAPH_);
@@ -95,8 +96,8 @@ function startSim(){
 function runSim(graph){
     //Default interval is every 5 seconds a request is made.
     //let interval = 5000.00/speed;
-    if(interval == 0){
-        //I aint dealing with infinity
+    if(interval < 0.001 || speed > 100){
+        //Insane speed breaks graph. Animation tracker can't keep up.
         return;
     }
 
@@ -125,7 +126,7 @@ function runSim(graph){
     //Performance/Testing Mode
     //Use for large/fast test cases since setTimeout has a 4ms delay.
     else if(performSim.value=="enabled"){
-        let randomPair; console.log("performance sim started");
+        let randomPair; console.log("performance sim started"); startTime = performance.now();
         while(numRequests > 0){
 
             if(Math.random() <= probability){
@@ -165,7 +166,6 @@ function runSim(graph){
         //console.log(avg);
         consoleLog.innerHTML = "CONSOLE LOG: Simulation complete, Average Time Taken per Request= " + avg.toFixed(2) + "ms, View Results by downloading them below";
         document.getElementById("tableToCSV").style.backgroundColor = "#EADE64";
-        resetCars();
         if(previousGraph.length==0){
             previousGraph.push(graph);
         }
@@ -336,5 +336,14 @@ function clearCSVTable(){
     let t = document.getElementById("tableData");
     while(t.rows.length > 1){
         t.deleteRow(1);
+    }
+}
+
+function drawRandomGraph(genType, nodeNum){
+    if(genType == "erdos"){
+        generateRandomBoundedGraph(nodeNum, 20, true);
+    }
+    else{
+        generateRandomWalkGraph(nodeNum, 20, true);
     }
 }
