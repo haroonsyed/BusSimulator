@@ -20,6 +20,6 @@ Simulation with specified parameters including speed, probability and # of reque
 Car display with car color, number, passenger count, and current station
 
 By :
-  Haroon Syed
-  Zack Allen
-  James Horn
+  Haroon Syed,
+  Zack Allen,
+  James Horn,
