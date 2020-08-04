@@ -7,11 +7,14 @@ class Graph{
     }
     
     addNode(n){
+      if(this.graph.has(n.name)){
+        this.nodeList[parseInt(n.name-1)] = n;
+      }
+      else{
         this.nodeList.push(n);
         this.nodeCount++;
-        if(!this.graph.has(n)){
-          this.graph.set(n.name,n);
-        }
+      }
+      this.graph.set(n.name,n);
     }
     printAllNodes(){
         for(let i=0; i < this.nodeList.length; i++){
@@ -21,22 +24,26 @@ class Graph{
     //from & to are from Node Class
     //weight should be pythagorean distance between two nodes (to be changed)
     insertEdge(from, to, weight){ 
-        let pair = {
-            toName: to.name,
-            weight: weight,
-        };
-        if(!this.graph.has(from.name)){
-            this.graph.set(from.name, from);
-            let n = this.graph.get(from.name).neighbors;
-            n.push(pair);
-        }
-        
-        else{
-           let n = this.graph.get(from.name).neighbors;
-           n.push(pair);
-        }
-        
-        this.nodeCount = this.nodeList.length;
+      let pair = {
+          toName: to.name,
+          weight: weight,
+      };
+      //Adds to node to graph if it doesn't exist
+      if(!this.graph.has(to.name)){
+        this.graph.set(to.name, to);
+        this.graph.get(to.name).neighbors = [];
+      }
+      if(!this.graph.has(from.name)){
+          this.graph.set(from.name, from);
+          let n = this.graph.get(from.name).neighbors;
+          n.push(pair);
+      }
+      else{
+         let n = this.graph.get(from.name).neighbors;
+         n.push(pair);
+      }
+      
+      this.nodeCount = this.nodeList.length;
     }
     printConnections(){
     let graph2 = new Map([...this.graph.entries()].sort());
