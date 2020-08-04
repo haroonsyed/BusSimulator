@@ -85,6 +85,20 @@ function svgCircle(x,y,r,color,svg,graphType){
     //svgGraph.printAllNodes();
 }
 
+//Used to draw circle initially & create node object that is added to graph. Modifies nodes passed into it
+function svgGenerateCircle(x,y,r,color,svg,node){
+    let newElement = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+    newElement.setAttribute("r",r);
+    newElement.setAttribute("cx",x);
+    newElement.setAttribute("cy",y);
+    newElement.style.fill = color;
+    svg.appendChild(newElement);
+    //console.log("count: " + count);
+    node.id = newElement;
+    return node;
+    //svgGraph.printAllNodes();
+}
+
 //Used to redraw circle ontop of edge when edge is created
 function svgCircleReplace(x,y,r,color,svg, node){
     svg.removeChild(node.id);
