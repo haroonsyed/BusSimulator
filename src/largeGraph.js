@@ -39,23 +39,39 @@ function bfs(startNode){
 
    
   //generates square random connected graph with n nodes
-  //Node names are integer strings
-function  generateRandomWalkGraph(n){
+  //Node names are integer strings. R is radius
+function  generateRandomWalkGraph(numNodes, radius, drawMode){
     //Generate n vertices with random weights
     //Quick Research shows bus stops are .2km to 2km apart.
     //Max connections from one node to other nodes is 4, modelling intersections.
     let visited = new Map();
+    let nodeDraw = [];
+    while(svg.lastChild && drawMode){
+      svg.removeChild(svg.lastChild);
+    }
 
     //Start with random vertex and "walk" from there
-    let startVertex = Math.floor(Math.random() * n);
+    let startVertex = Math.floor(1 + Math.random() * numNodes);
 
     //Seed graph
     visited.set(startVertex, new Set());
-    large.graph.set(startVertex.toString(), new Node(0,0,0,startVertex.toString()));
+    let startNode = new Node(800,300,radius,startVertex.toString());
+    large.addNode(startNode);
+    
+    let groupStart={
+      x:800,
+      y:300,
+      radius:radius,
+      color: "black",
+      svg:svg,
+      num: startNode.name,
+    };
+    nodeDraw.push(groupStart);
+    
 
     //Using a random walk algorithm
-    while(visited.size != n){
-      let neighbor = Math.floor(Math.random() * n);
+    while(visited.size != numNodes){
+      let neighbor = Math.floor(1 + Math.random() * numNodes);
 
       //console.log(startVertex + " to " + neighbor);
       //console.log(visited.get(startVertex));
@@ -81,7 +97,7 @@ function  generateRandomWalkGraph(n){
 
           //X and Y coordinates
           //10 px will be 1 km, change here
-          let scale = 10;
+          let scale = 150;
           let weight = scale * (0.2 + Math.random() * 1.8);
 
           let from = large.graph.get(startVertex.toString());
@@ -104,21 +120,28 @@ function  generateRandomWalkGraph(n){
               console.log("ERROR! Generated impossible direction!");
           }
           
-          let to = new Node(x,y,0,neighbor.toString());
+          let to = new Node(x,y,radius,neighbor.toString());
+
+          large.addNode(to);
+          let group;
+          if(drawMode){
+            let group={
+              x:x,
+              y:y,
+              radius:radius,
+              color: "black",
+              svg:svg,
+              num: neighbor.toString(),
+            };
+            nodeDraw.push(group);
+            //svgCircle(x,y,radius,"black",svg,large);
+            svgLine(from.x,from.y,x,y,5,"black",svg);
+          }
           //Double directional
-          this.insertEdge(from, to, weight);
-          this.insertEdge(to, from, weight);
-
-        }
-        else{
-          
-          while(!visited.has)[
-
-          ]
-          
+          large.insertEdge(from, to, weight);
+          large.insertEdge(to, from, weight);
         }
 
-        
       }
       else if(visited.get(startVertex).size == 4){
         //Because it is at a node where all 4 branches are used, tell it to go down a random neighbor
@@ -131,15 +154,24 @@ function  generateRandomWalkGraph(n){
       }
       startVertex = neighbor;
     }
+    if(drawMode){
+      large.nodeList = [];
+      for(let i=0; i < nodeDraw.length; i++){
+        let n = nodeDraw[i];
+        large.nodeList.push(svgGenerateCircle(n.x,n.y,n.radius,n.color,n.svg,large.graph.get((i+1).toString())));
+        svgText(n.x-3,n.y+3,n.num);
+      }
+    }
+    svgGraph = large;
           
 }
   //This version creates a bounding box of size n pixels (scalable) and clicks n nodes randomly in.
   //Based on Erdos Reyni. Radius is radius of nodes (used for display)
-  function generateRandomBoundedGraph(n, radius){
+  function generateRandomBoundedGraph(n, radius, drawMode){
     //The small number is my pc's constant for the n^2 time complexity. Should give a ballpark for other PCs.
     console.log(n);
     //consoleLog.innerHTML = "CONSOLE LOG: Generating graph. Will take approximately: " + (Math.pow(n, 2)*0.000000006).toString() + " seconds.";
-    //let nodeDraw = [];
+    let nodeDraw = [];
     //Erdos Renyi Model
     //Probability
     let isConnected = false;
@@ -151,13 +183,13 @@ function  generateRandomWalkGraph(n){
     large = new Graph();
     while(!isConnected){
       //Wipe graph
-      //nodeDraw.splice(0,nodeDraw.length);
+      nodeDraw.splice(0,nodeDraw.length);
       large.graph.clear();
       large.nodeList.splice(0,large.nodeList.length);
       large.nodeCount = 0;
-    // while(svg.lastChild){
-        // svg.removeChild(svg.lastChild);
-    // }
+      while(svg.lastChild && drawMode){
+       svg.removeChild(svg.lastChild);
+      }
       //Change this to increase distance between drawn nodes.
       //Multiplies number of pixels per node
       //16:9 aspect ratio for canvas display
@@ -169,20 +201,23 @@ function  generateRandomWalkGraph(n){
       for(let i = 1; i<=n; i++){
         let x = Math.random() * bounding_box_sizeX;
         let y = Math.random() * bounding_box_sizeY;
-        let group={
+        let group;
+        if(drawMode){
+          let group={
             x:x,
             y:y,
             radius:radius,
             color: "black",
             svg:svg,
             num: i.toString(),
-        };
-        //nodeDraw.push(group);
-        //svgCircle(x,y,radius,"black",svg,large);
-        //svgText(x-3,y+3,i.toString());
+          };
+          nodeDraw.push(group);
+          //svgCircle(x,y,radius,"black",svg,large);
+          //svgText(x-3,y+3,i.toString());
+        }
         let node = new Node(x,y,radius,i.toString());
         large.addNode(node);
-        //this.graph.set(node.name, node);
+        //large.graph.set(node.name, node);
       }
       console.log(large);
       //Add edges randomly
@@ -203,7 +238,9 @@ function  generateRandomWalkGraph(n){
             }
             
             addDoubleEdge(i.toString(), j.toString(), distance);
-            //svgLine(n1.x,n1.y,n2.x,n2.y,5,"black",svg);
+            if(drawMode){
+              svgLine(n1.x,n1.y,n2.x,n2.y,5,"black",svg);
+            }
           }
 
         }
@@ -213,13 +250,16 @@ function  generateRandomWalkGraph(n){
       isConnected = isGraphConnected();
       console.log(isConnected);
     }
-    //large.printConnections();
-    //for(let i=0; i < nodeDraw.length; i++){
-       // let n = nodeDraw[i];
-        //svgCircle(n.x,n.y,n.radius,n.color,n.svg,large);
-        //svgText(n.x-3,n.y+3,n.num);
-    //}
-    //svgGraph = large;
+    
+    if(drawMode){
+      large.nodeList = [];
+      for(let i=0; i < nodeDraw.length; i++){
+        let n = nodeDraw[i];
+        large.nodeList.push(svgGenerateCircle(n.x,n.y,n.radius,n.color,n.svg,large.graph.get((i+1).toString())));
+        svgText(n.x-3,n.y+3,n.num);
+      }
+    }
+    svgGraph = large;
     console.log("finished");
   }
 
