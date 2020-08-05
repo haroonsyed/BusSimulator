@@ -17,7 +17,7 @@ var numRequests = 100;
 //Considered as time speedup. Req/sec = 5sec/speed
 var speed = -1;
 //Considered as request frequency
-var constant;
+var constant = 1;
 var probability = 1;
 //Considered time "0";
 startTime = performance.now();
