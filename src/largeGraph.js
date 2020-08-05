@@ -44,6 +44,7 @@ function  generateRandomWalkGraph(numNodes, radius, drawMode){
     //Generate n vertices with random weights
     //Quick Research shows bus stops are .2km to 2km apart.
     //Max connections from one node to other nodes is 4, modelling intersections.
+    large = new Graph();
     let visited = new Map();
     let nodeDraw = [];
     while(svg.lastChild && drawMode){
