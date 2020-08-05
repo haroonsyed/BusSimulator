@@ -45,23 +45,36 @@ function routeGeneration(start, end, busses, graph,algo){
         scoreFactor = parseInt(scoreFactor * (busses[k].passengers + 1));
 
         //see if new request could even fit
-        let compare = busses[k].futurePassengers + busses[k].passengers;
-	    //if(numStart > 0 && numEnd > 0 && startIndex < endIndex){
-        //    for(let i = 0; i < busses[k].path.length; i++){
-        //        if(i < endIndex){
-        //            compare += busses[k].path[i].change;
-        //        }
-        //    }
-        //}
-        //else{
-        //    for(let i = 0; i < busses[k].path.length - 1; i++){
-        //        compare += busses[k].path[i].change;
-        //    }
-        //}
-        if(compare >= busses[k].capacity){
-            //console.log("Bus " + busses[k].name + " has not been added to PQ for capacity reasons");
+        let compare = busses[k].passengers;
+        let overCapacity = false;
+	    if(numStart > 0 && numEnd > 0 && startIndex < endIndex){
+            for(let i = 0; i < busses[k].path.length; i++){
+                if(i < endIndex){
+                    compare += busses[k].path[i].change;
+                    if(compare >= busses[k].capacity || compare <= 0){
+                        console.log("Bus " + busses[k].name + " has not been added to PQ for capacity reasons");
+                        overCapacity = true;
+                        break;
+                    }
+                }
+            }
+        }
+        else{
+            for(let i = 0; i < busses[k].path.length - 1; i++){
+                compare += busses[k].path[i].change;
+                if(compare >= busses[k].capacity || compare <= 0){
+                    console.log("Bus " + busses[k].name + " has not been added to PQ for capacity reasons");
+                    overCapacity = true;
+                    break;
+                }
+            }
+        }
+
+        if(overCapacity){
+            overCapacity = false;
             continue;
         }
+
         //if start and end are in the bus path (in order)
         if(numStart == 1 && numEnd == 1 && startIndex < endIndex){
             //adjust score
@@ -139,7 +152,6 @@ function routeGeneration(start, end, busses, graph,algo){
     if(numStart > 0 && numEnd > 0){
         //sets passenger changes at those stops
         best.path[startIndex].change++;
-        best.futurePassengers++;
         best.path[endIndex].change--;
     }
     //only start was in the path
@@ -162,7 +174,6 @@ function routeGeneration(start, end, busses, graph,algo){
         }
         //sets passenger changes at those stops
         best.path[startIndex].change++;
-        best.futurePassengers++;
         best.path[best.path.length - 1].change--;
     }
     //if only end was in the path or both start and end were not in the path
@@ -195,7 +206,6 @@ function routeGeneration(start, end, busses, graph,algo){
         }
         //sets passenger changes at those stops
         best.path[temp].change++;
-        best.futurePassengers++;
         best.path[best.path.length - 1].change--;
     }
     console.log("best bus: " + best.name + "\n\n");
