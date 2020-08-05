@@ -8,7 +8,8 @@ let carList = [];
 let animateList = [];
 let carTable = document.getElementById("carInfo");
 let runningAnimation = false; let updatedList = false;
-let newAnimationPath = []; let newChunkPath = [];
+var constant = document.getElementById("animationConstant").value;
+let newAnimationPath = []; let newChunkPath = []; let simRunning = false;
 
 
 //Only allow one pathfinding algorithm to be enabled
@@ -144,10 +145,22 @@ function resetCars(){
 }
 
 function updateMaxPassengers(){
-    let limit = document.getElementById("maxPassengers").value;
+    let limit;
+    if(document.getElementById("maxPassengers").value < 1){
+        consoleLog.innerHTML = "CONSOLE LOG: Lower Limit for Max Passengers reached";
+        document.getElementById("maxPassengers").value = 1;
+        limit = parseInt(1);
+    }
+    else if(document.getElementById("maxPassengers").value > 12){
+        consoleLog.innerHTML = "CONSOLE LOG: Upper Limit for Max Passengers reached";
+        document.getElementById("maxPassengers").value = 12;
+        limit = parseInt(12);
+    }
+    else{}
+    limit = parseInt(document.getElementById("maxPassengers").value);
     console.log("update max to: " + limit);
     for(let i=0; i < carList.length; i++){
-        carList[i].capcacity = limit;
+        carList[i].capacity = limit;
     }
 }
 
@@ -190,7 +203,7 @@ function requestRide(fromNum,toNum){
             //CALL SCORE FUNCTION
             if(algo=="aStar"){
                 selected = routeGeneration(svgGraph.nodeList[from-1],svgGraph.nodeList[to-1],carList,svgGraph,"aStar");
-                console.log(selected.name);
+                console.log("car: " + selected.name);
                 if(selected==false){
                     consoleLog.innerHTML = "CONSOLE LOG: No Valid Path Exists";
                     return;
@@ -293,21 +306,20 @@ function generatePath(carPath){
     //divideChunks(chunks,carNum);
 }
 
-
-/* Not Used
-function divideChunks(chunks,carNum){
-    //console.log("chunkssize: " + chunks.size());
-    //console.log(chunks.front().d + " (" + chunks.front().w  + ")");
-    let count = 0; 
-    let f = chunks.front().from; let t = chunks.front().to;
-    let w = chunks.front().w;
-
-    animateChunk(f,t,w,carNum,count,chunks);
-    console.log("reached");
-    //console.log(carList[carNum-1].path[0].name);
-
+function updateConstant(){
+    if(simRunning==false){
+        if(document.getElementById("animationConstant").value >= 1){
+            constant = document.getElementById("animationConstant").value;
+            console.log("new constant: " + constant);
+        }
+        else{
+            document.getElementById("animationConstant").value = 1;
+            constant = 1;
+            console.log("min limit reached");
+        }
+    }
 }
-*/
+
 
 function animateChunk2(from,to,weight,carNum,count,chunks){
 
@@ -316,11 +328,8 @@ function animateChunk2(from,to,weight,carNum,count,chunks){
     let wDur = (weight/(constant*100)).toString() + "s";
     let carObj = carList[carNum-1];
     //console.log("chunks at: " + from.name + " " + chunks[0].passengerCount);
-    carObj.passengers += chunks[0].passengerCount;
+    carObj.passengers += parseInt(chunks[0].passengerCount);
     carTable.rows[carNum].cells[2].innerHTML = carObj.passengers;
-
-
-    chunks.splice(0,1);
     carObj.path.splice(0,1);
 
     let animation = document.createElementNS("http://www.w3.org/2000/svg", "animate");
@@ -348,7 +357,7 @@ function animateChunk2(from,to,weight,carNum,count,chunks){
     carObj.y = to.y;  
 
     animation2.onend = () => {
-
+        chunks.splice(0,1);
         //console.log("ended edge");
         if(carObj.path.length==1){
             carTable.rows[carNum].cells[3].innerHTML = to.name;
@@ -374,11 +383,12 @@ function animateChunk2(from,to,weight,carNum,count,chunks){
         else{
             carObj.runningAnimation = false;
             //console.log("chunks at end: " + carObj.path[carObj.path.length-1].change);
-            carObj.passengers += carObj.path[carObj.path.length-1].change;
+            carObj.passengers += parseInt(carObj.path[carObj.path.length-1].change);
             carTable.rows[carNum].cells[2].innerHTML = carObj.passengers;
 
             if(carObj.path.length==1){
                 carObj.path[0].change = 0;
+                //chunks[0].passengerCount = 0;
             }
 
             return;

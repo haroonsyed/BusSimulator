@@ -7,7 +7,7 @@ let GRAPH_; var interval; let algo;
 let tableData = document.getElementById("tableData");
 let graphSim = document.getElementById("graphicalSim");
 let performSim = document.getElementById("performanceSim");
-let n,requests,fireInterval,prob;
+let n,requests,fireInterval,prob; 
 
 
 
@@ -17,7 +17,7 @@ var numRequests = 100;
 //Considered as time speedup. Req/sec = 5sec/speed
 //var speed = -1;
 //Considered as request frequency
-var constant;
+//var constant;
 var probability = 1;
 //Considered time "0";
 startTime = performance.now();
@@ -28,11 +28,9 @@ function startSim(){
     disableSimButtons();
     setTimeout(function(){
     if(aBtn.value=="enabled"){
-        //consoleLog.innerHTML = "CONSOLE LOG: A* Path Finding Selected";
         algo="aStar";
     }
     else if(dBtn.value=="enabled"){
-        //consoleLog.innerHTML = "CONSOLE LOG: Dijkstra Path Finding Selected";
         algo="dijkstra";
     }
     else{
@@ -42,13 +40,17 @@ function startSim(){
 
     if(graphSim.value=="enabled"){
         console.log("graph button");
-        if(svgGraph.nodeList.length < 3){
+        if(svgGraph.nodeList.length < 2){
             consoleLog.innerHTML = "CONSOLE LOG: Error, Graph not created";
             return;
         }
         requests = document.getElementById("numRequests").value;
         fireInterval = document.getElementById("fireInterval").value;
         prob = document.getElementById("probability").value;
+        if(requests < 1){requests=1; document.getElementById("numRequests").value = 1;}
+        if(fireInterval < .001){fireInterval=.001; document.getElementById("fireInterval").value=.001}
+        if(prob < .1){prob=.1; document.getElementById("probability").value = .1;} else if(prob > 1){prob=1; document.getElementById("probability").value = 1;} else{}
+
         console.log("CONSOLE LOG: Simulation beginning with: " + requests + " requests, " + fireInterval + "ms interval, and " + probability*100 + "% probability firing rate");
         GRAPH_ = svgGraph;
     }
@@ -57,6 +59,8 @@ function startSim(){
         requests = document.getElementById("numRequests").value;
         prob = 1;
         fireInterval = .001;
+        if(requests < 1){requests=1; document.getElementById("numRequests").value = 1;}
+        if(n < 10){n=10; document.getElementById("numNodes").value=10;}
         if(lastGraph.value=="enabled" && previousGraph.length==1){
             GRAPH_ = previousGraph[0];
             console.log("previous graph has been loaded: ");
@@ -86,6 +90,7 @@ function startSim(){
     constant = document.getElementById("animationConstant").value * 2 / fireInterval;
     console.log("runSim Called");
     startTime = performance.now();
+    simRunning = true;
     runSim(GRAPH_);
     },1500);
 }
@@ -117,6 +122,7 @@ function runSim(graph){
             let avg = averageTable(tableData);
             consoleLog.innerHTML = "CONSOLE LOG: Simulation complete, Average Time Taken per Request= " + avg.toFixed(2) + "ms, View Results by downloading them below";
             document.getElementById("tableToCSV").style.backgroundColor = "#EADE64";
+            simRunning = false;
             enableSimButtons();
         },5000);
         return;
@@ -170,7 +176,8 @@ function runSim(graph){
             previousGraph.push(graph);
         }
         else{previousGraph[0] = graph;}
-        //enableSimButtons();
+        enableSimButtons();
+        simRunning = false;
     }
     
     //GUI mode
