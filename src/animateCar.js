@@ -285,7 +285,7 @@ function generatePath(carPath){
             }
         }
     }
-    consoleLog.innerHTML = s;
+    consoleLog.innerHTML = "Requests Left: " + (numRequests-1) +  " | " + s;
     /*for(let i=0; i < chunks.length; i++){
         console.log(chunks[i]);
     }*/
@@ -301,11 +301,9 @@ function divideChunks(chunks,carNum){
     let count = 0; 
     let f = chunks.front().from; let t = chunks.front().to;
     let w = chunks.front().w;
-
     animateChunk(f,t,w,carNum,count,chunks);
     console.log("reached");
     //console.log(carList[carNum-1].path[0].name);
-
 }
 */
 
@@ -385,5 +383,3 @@ function animateChunk2(from,to,weight,carNum,count,chunks){
         }
     }
 }
-
-
