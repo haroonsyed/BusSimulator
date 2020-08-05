@@ -17,7 +17,7 @@ var numRequests = 100;
 //Considered as time speedup. Req/sec = 5sec/speed
 var speed = -1;
 //Considered as request frequency
-var constant = 1;
+var constant = 2;
 var probability = 1;
 //Considered time "0";
 startTime = performance.now();
@@ -85,7 +85,7 @@ function startSim(){
     interval = 1000*fireInterval;
     probability = prob;
     speed = document.getElementById("animationConstant").value;
-    constant = speed * 2 / fireInterval;
+    constant = speed * 2;
     console.log("runSim Called");
     startTime = performance.now();
     runSim(GRAPH_);
