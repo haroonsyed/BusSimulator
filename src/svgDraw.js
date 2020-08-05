@@ -22,9 +22,7 @@ function setSVGSize(){
     //let cont = document.getElementById("svg-container");
     //cont.style.width = w;
    // cont.style.height = h;
-
 }
-
 window.onresize = function(e){
     //setSVGSize();
 }
@@ -230,23 +228,28 @@ function addNode2(x,y){
 }
 
 function resetScreen(){
-    console.log("reset screen");
-    if(previousGraph.length==0){
-        previousGraph.push([svgGraph,svg]);
+    if(keepRunning == true){
+        keepRunning = false;
     }
-    else{previousGraph[0] = svgGraph;}
-    while(svg.lastChild){
-        svg.removeChild(svg.lastChild);
-    }
+    setTimeout(function(){
+        console.log("reset screen");
+        if(previousGraph.length==0){
+            previousGraph.push([svgGraph,svg]);
+        }
+        else{previousGraph[0] = svgGraph;}
+        while(svg.lastChild){
+            svg.removeChild(svg.lastChild);
+        }
 
-    let t = document.getElementById("carInfo");
-    while(t.rows.length > 1){
-        t.deleteRow(1);
-    }
-    
-    svgGraph = new Graph();
-    elementList = [];carList = [];
-    newAnimationPath = [];newChunkPath = [];
+        let t = document.getElementById("carInfo");
+        while(t.rows.length > 1){
+            t.deleteRow(1);
+        }
+        
+        svgGraph = new Graph();
+        elementList = [];carList = [];
+        newAnimationPath = [];newChunkPath = [];
+    }, 2000)
     
 }
 
