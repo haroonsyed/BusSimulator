@@ -97,7 +97,7 @@ function startSim(){
 function runSim(graph){
     //Default interval is every 5 seconds a request is made.
     //let interval = 5000.00/speed;
-    if(interval < 0.001 || speed > 100){
+    if(interval < 0.0001 || speed > 10000){
         //Insane speed breaks graph. Animation tracker can't keep up.
         return;
     }
