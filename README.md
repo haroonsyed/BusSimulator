@@ -31,6 +31,15 @@ Visible table data to display Car: Color, #, # Passengers, & Current/Next Statio
    - Directly compare A* vs Dijkstra on a complete/random graph of size N nodes on X # of requests
    - Random Graph generator based on Erdos-Renyi Model
    - Load Previous Graph (Performance Sim only) to save time on regenerating graphs
+   
+3. For more features
+   - Download the beta version under releases.
+   - Contains all hidden features from main release including:
+      - Random graph generation drawing
+      - Simulation cancelling
+      - Request counter
+      - Speed independent of interval
+      - Higher max speeds and lower intervals.
 
 Download Graphical/Performance Simulation results as a CSV
 
