@@ -1,0 +1,120 @@
+<!--Main html page-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Windows98 - PRT Simulation</title>
+    <link href= "index.css" rel="stylesheet" type="text/css">
+
+
+  </head>
+  <body>
+    
+    <div id="main-content">
+      
+    
+      <div id="svg-container">
+        
+       <svg xmlns="http://www.w3.org/2000/svg" id="svg1" onclick="" 
+       viewBox="0 0 1600 800" preserveAspectRatio="xMinYMin meet">
+      </svg>
+      
+     </div><!--end svg-container-->
+     <script type="text/javascript" src="node.js"></script>
+     <script type="text/javascript" src="car.js"></script>
+     <script type="text/javascript" src="graph.js"></script>
+     <script type="text/javascript" src="queue.js"></script>
+     <script type="text/javascript" src="minpriorityqueue.js"></script>
+     <script type="text/javascript" src="dawsonPQ.js"></script>
+     <script type="text/javascript" src="aStar.js" ></script>
+     <script type="text/javascript" src="routeGeneration.js"></script>
+
+     <div id="commands">
+       <div id="buttons">
+       <h2 id="console-log">CONSOLE LOG: </h2>
+      <p><u>Add/Remove On Screen</u> 
+      <button id = "greenBtn" type="button" value="disabled" onclick="">Add Nodes/Edges</button>
+      <button id = "car" type="button" value="disabled" onclick="">Add Car</button>
+      <input type="text" placeholder="Station #" size="5" id="carNumInput">
+      <button id = "resetScreen" type="button" onclick="resetScreen()">Reset Screen</button>
+      </p>
+
+      <p><u>Select Pathfinding:</u>
+      <button id = "aStarPath" type="button" value="disabled" onclick="">Use A* Pathfinding</button>
+      <button id = "dijkstraPath" type="button" value="disabled" onclick="">Use Dijkstra Pathfinding</button>
+      </p>
+      <p><u>Request Ride:</u>
+      <button id = "requestRide" type="button" value="disabled" onclick="">Submit Request Ride</button>
+      <input type="text" placeholder="Start Station #" value="" size="10" id="startInput">
+      <input type="text" placeholder="End Station #" size="10" id="endInput">
+      <!--<input type="text" placeholder="Car # (to be removed)" size="15" id="carAnimateInput">-->
+      </p>
+
+      <p><u>Change Parameters:</u>
+        <label for="animationConstant">Animation Speed</label>
+        <input type="number" id="animationConstant" min="1" max="3" value="1.0" step=".25" onclick="updateConstant()"> x &nbsp;
+        <label for="maxPassengers">Max # Passengers</label>
+        <input type="number" id="maxPassengers" min="1" max="12" value="1" step="1" onclick="updateMaxPassengers()">
+        
+      </p>
+    
+
+      <p><u>Select Simulation Type:</u>
+        <button id = "graphicalSim" type="button" value="disabled" onclick="">Graphical Simulation</button>
+        <button id = "performanceSim" type="button" value="disabled" onclick="">Performance Simulation</button>
+      </p>
+
+      <p><u>Simulation Parameters:</u>
+        <label id="numNodesLabel" for="numNodes"># Nodes</label>
+        <input type="number" id="numNodes" min="10" max="100000" step="100">
+        <label for="numRequests"># Requests</label>
+        <input type="number" id="numRequests" min="10" max="100000" step="100" value="">
+        <label id="fireIntervalLabel" for="fireInterval">Interval</label>
+        <input type="number" id="fireInterval" min=".001" max="1" step=".001" value="">
+        <label id="probabilityLabel" for="probability">Probability</label>
+        <input type="number" id="probability" min="0.1" max="1" step=".1" value="">
+      </p>
+
+        <table id="tableData">
+          <tr>
+            <th>Time</th>
+            <th>From</th> 
+            <th>To</th>
+            <th>Test</th>
+          </tr>
+
+        </table>
+
+      
+      <button id="runLargeSimulation" type="button" onclick="startSim()">Start Simulation</button>
+      <button id = "tableToCSV" type="button" value="disabled" onclick="dataToCSV(tableData)">Download Results as CSV</button>
+      <button id = "lastGraph" type="button" value="disabled" onclick="loadPreviousGraph()">Load Previous Graph</button>
+      </div><!--end buttons-->
+
+      <div id="displayCars">
+        <h2><b>Display Cars</b></h2>
+        <table id="carInfo">
+          <tr>
+            <th>Color</th>
+            <th>Car #</th>
+            <th># Passengers</th>
+            <th>Current Station</th>
+          </tr>
+        </table>
+      </div><!--end displayCars-->
+
+     </div><!--end commands-->
+
+     </div><!--end main content-->
+    
+    
+  
+  <script type="text/javascript" src="svgDraw.js"></script>
+    <script type="text/javascript" src="htmlToCSV.js"></script>
+        <script type="text/javascript" src="animateCar.js" ></script>
+        <script type="text/javascript" src="largeGraph.js" ></script>
+        <script type="text/javascript" src="requestHandler.js" ></script>
+
+  </body>
+
+</html>
