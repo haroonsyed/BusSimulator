@@ -165,7 +165,7 @@ function runSim(graph){
         console.log("Total time: " + (performance.now() - startTime));
         let avg = averageTable(tableData);
         //console.log(avg);
-        consoleLog.innerHTML = "CONSOLE LOG: Simulation complete, Average Time Taken per Request= " + avg.toFixed(2) + "ms,  Total Time= " + (performance.now() - startTime) + "ms, View Results by downloading them below";
+        consoleLog.innerHTML = "CONSOLE LOG: Simulation complete, Average Time Taken per Request= " + avg.toFixed(2) + "ms,  Total Time= " + (performance.now() - startTime).toFixed(2) + "ms, View Results by downloading them below";
         document.getElementById("tableToCSV").style.backgroundColor = "#EADE64";
         if(previousGraph.length==0){
             previousGraph.push(graph);
