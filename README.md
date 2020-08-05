@@ -8,10 +8,11 @@ At peak hours of bus/ride share services, passengers may be unevenly distributed
 ### **Installation**
 There are two ways to run our project (both of them work but the file size differs)
 1. Run source code on index.html (smaller file size)
-   - Download the "Source code" zip file from the releases page on the right
+   - Download the Source code by clicking the green "Code" button above this read me & download as zip
    - Unzip the file into a folder, open the folder, and then open index.html in Chrome
 2. Run as desktop application (larger file size, compatible for win32 64-bit machines)
-   - Download the "FinalProject3-win32-x64" zip file from the releases page on the right
+   - Click the "Executable Build with Electron" in the releases tab (on the right)
+   - Download the "FinalProject3" zip file from the assets file
    - Unzip the file into a folder and open the "FinalProject3" application in the main folder
      - To view the source code go to resouces->app (this is the same as the other installation)
 
