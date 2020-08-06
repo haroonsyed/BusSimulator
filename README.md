@@ -2,8 +2,8 @@
 ## Data Structures Final Group Project
 *By: Haroon Syed, Zack Allen, & James Horn*
 
-### **Demo: https://haroonsyed.github.io/BusSimulator/**
-### **Beta Demo: https://haroonsyed.github.io/BusSimulator/beta/**
+### **V1.0 Demo: https://haroonsyed.github.io/BusSimulator/**
+### **V1.1-Beta Demo: https://haroonsyed.github.io/BusSimulator/beta/**
 
 ### **Intro**
 At peak hours of bus/ride share services, passengers may be unevenly distributed between vehicles. This may cause congestion of traffic and increased wait times. We want to create a model that chooses personal vehicles for passengers based on the amount of passengers already in the vehicle and the distance that the vehicle has to travel for the destination (correlated with time spent travelling). This can be especially evident on the RTS bus system. With this model, an app/software could choose vehicles for passengers and create less congested and safer roads on campus.
