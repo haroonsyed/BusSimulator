@@ -315,7 +315,12 @@ function animateChunk2(from,to,weight,carNum,count,chunks){
     let carObj = carList[carNum-1];
     //console.log("chunks at: " + from.name + " " + chunks[0].passengerCount);
     carObj.passengers += chunks[0].passengerCount;
+    carObj.futurePassengers -= chunks[0].passengerCount;
     carTable.rows[carNum].cells[2].innerHTML = carObj.passengers;
+    //Temp fix when passenger change goes below 0. Accurate in long run.	
+    if(carObj.passengers < 0){	
+        carTable.rows[carNum].cells[2].innerHTML = 0;	
+    }
 
 
     chunks.splice(0,1);

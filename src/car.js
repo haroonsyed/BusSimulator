@@ -6,6 +6,7 @@ class Car{
         this.name = name;
         this.id = id;
         this.passengers = 0;
+        this.futurePassengers = 0;
         this.path = [];
         this.newAnimation = [];
         this.newChunkPath = [];

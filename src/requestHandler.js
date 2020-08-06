@@ -43,7 +43,7 @@ function startSim(){
 
     if(graphSim.value=="enabled"){
         console.log("graph button");
-        if(svgGraph.nodeList.length < 3){
+        if(svgGraph.nodeList.length < 2){
             consoleLog.innerHTML = "CONSOLE LOG: Error, Graph not created";
             return;
         }
@@ -107,7 +107,7 @@ function runSim(graph){
         
         setTimeout(function(){
             for(let i=0; i < carList.length; i++){
-                if(carList[i].path.length!=1){
+                if(carList[i].path.length!=1 || carList[i].runningAnimation != false){
                     runSim(graph);
                     return;
                 }
@@ -158,6 +158,8 @@ function runSim(graph){
                 newRow.push(randomPair.first.name);
                 newRow.push(randomPair.second.name);
                 newRow.push((t2-t1).toString());
+                newRow.push("disabled in performance mode");
+                newRow.push("disabled in performance mode");
                 appendTableData(tableData, newRow);
                 numRequests--;
             }
@@ -203,6 +205,12 @@ function runSim(graph){
         newRow.push(randomPair.first.name);
         newRow.push(randomPair.second.name);
         newRow.push((t2-t1).toString());
+        let sPath = "";
+        for(let k=0; k<nextPath.length; k++){
+            sPath += nextPath[k].name + " ";
+        }
+        newRow.push(sPath);
+        newRow.push(lastBest);
         appendTableData(tableData, newRow);
         numRequests--;
       }
@@ -216,8 +224,8 @@ function runSim(graph){
 function randomNodePair(graph){
     let range = graph.graph.size;
     let randomPair = {
-        first: graph.graph.get((Math.floor(Math.random()*range + 1)).toString()),
-        second: graph.graph.get((Math.floor(Math.random()*range + 1)).toString()),
+        first: graph.graph.get((Math.floor(Math.random()*range + 0.99)).toString()),
+        second: graph.graph.get((Math.floor(Math.random()*range + 0.99)).toString()),
     }
     if(randomPair.first.name == randomPair.second.name){
         randomPair = randomNodePair(graph);
