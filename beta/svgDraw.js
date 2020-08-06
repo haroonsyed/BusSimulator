@@ -22,9 +22,7 @@ function setSVGSize(){
     //let cont = document.getElementById("svg-container");
     //cont.style.width = w;
    // cont.style.height = h;
-
 }
-
 window.onresize = function(e){
     //setSVGSize();
 }

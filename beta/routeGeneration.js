@@ -1,12 +1,16 @@
 //Made by James Horn July 2020
+var nextPath;
+var lastBest;
 function routeGeneration(start, end, busses, graph,algo){
     //use either A* or dijkstra depending on the passed string
     let aPath;
     if(algo=="aStar"){
-        aPath = aStar(graph, start, end).length;
+        nextPath = aStar(graph, start, end);
+        aPath = nextPath.length;
     }
     else{
-        aPath = graph.dijkstraPQ(start, end).length;
+        nextPath = graph.dijkstraPQ(start, end);
+        aPath = nextPath.length;
     }
     if(aPath==0){
         return false;
@@ -45,8 +49,8 @@ function routeGeneration(start, end, busses, graph,algo){
         scoreFactor = parseInt(scoreFactor * (busses[k].passengers + 1));
 
         //see if new request could even fit
-        let compare = busses[k].passengers;
-        let overCapacity = false;
+        let compare = busses[k].passengers + busses[k].futurePassengers;
+        /*let overCapacity = false;
 	    if(numStart > 0 && numEnd > 0 && startIndex < endIndex){
             for(let i = 0; i < busses[k].path.length; i++){
                 if(i < endIndex){
@@ -68,10 +72,10 @@ function routeGeneration(start, end, busses, graph,algo){
                     break;
                 }
             }
-        }
+        }*/
 
-        if(overCapacity){
-            overCapacity = false;
+        if(compare >= busses[k].capacity){
+            //overCapacity = false;
             continue;
         }
 
@@ -122,11 +126,13 @@ function routeGeneration(start, end, busses, graph,algo){
     //make sure a best bus is selected
     let best = scorePQ.peek();
     if(typeof best == 'undefined'){
+        lastBest = "noBest";
         return "noBest";
     }
     best = best.id;
     if(best.path.length < 1){
         console.log("ERROR: BEST CAR SELECTION HAS A PATH OF < 1");
+        lastBest = "noBest";
         return "noBest";
     }
     //find the start and end nodes that may be in the best bus
@@ -152,6 +158,7 @@ function routeGeneration(start, end, busses, graph,algo){
     if(numStart > 0 && numEnd > 0){
         //sets passenger changes at those stops
         best.path[startIndex].change++;
+        best.futurePassengers++;        
         best.path[endIndex].change--;
     }
     //only start was in the path
@@ -174,6 +181,7 @@ function routeGeneration(start, end, busses, graph,algo){
         }
         //sets passenger changes at those stops
         best.path[startIndex].change++;
+        best.futurePassengers++;
         best.path[best.path.length - 1].change--;
     }
     //if only end was in the path or both start and end were not in the path
@@ -206,8 +214,10 @@ function routeGeneration(start, end, busses, graph,algo){
         }
         //sets passenger changes at those stops
         best.path[temp].change++;
+        best.futurePassengers++;
         best.path[best.path.length - 1].change--;
     }
     console.log("best bus: " + best.name + "\n\n");
+    lastBest = best.name;
     return best;
 }
