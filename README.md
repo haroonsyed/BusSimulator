@@ -2,8 +2,7 @@
 ## Data Structures Final Group Project
 *By: Haroon Syed, Zack Allen, & James Horn*
 
-### **V1.0 Demo: https://haroonsyed.github.io/BusSimulator/**
-### **V1.1-Beta Demo: https://haroonsyed.github.io/BusSimulator/beta/**
+### **V1.0 Full Demo: https://haroonsyed.github.io/BusSimulator/**
 
 ### **Intro**
 At peak hours of bus/ride share services, passengers may be unevenly distributed between vehicles. This may cause congestion of traffic and increased wait times. We want to create a model that chooses personal vehicles for passengers based on the amount of passengers already in the vehicle and the distance that the vehicle has to travel for the destination (correlated with time spent travelling). This can be especially evident on the RTS bus system. With this model, an app/software could choose vehicles for passengers and create less congested and safer roads on campus.
@@ -36,13 +35,15 @@ Visible table data to display Car: Color, #, # Passengers, & Current/Next Statio
    - Load Previous Graph (Performance Sim only) to save time on regenerating graphs
    
 3. For more features
-   - Download the beta version under releases.
+   ### **V1.1 Beta Demo: https://haroonsyed.github.io/BusSimulator/beta/**
+   - Download the beta version under releases or open beta demo link.
    - Contains all hidden features from main release including:
       - Random graph generation drawing
       - Simulation cancelling
       - Request counter
       - Speed independent of interval
       - Higher max speeds and lower intervals.
+      - More detailed data in CSV file
 
 Download Graphical/Performance Simulation results as a CSV
 
