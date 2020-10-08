@@ -3,6 +3,7 @@
 *By: Haroon Syed, Zack Allen, & James Horn*
 
 ### **V1.0 Full Demo: https://haroonsyed.github.io/BusSimulator/**
+### **VIDEO DEMO: https://www.youtube.com/watch?v=TunntaLqkg8/**
 
 ### **Intro**
 At peak hours of bus/ride share services, passengers may be unevenly distributed between vehicles. This may cause congestion of traffic and increased wait times. We want to create a model that chooses personal vehicles for passengers based on the amount of passengers already in the vehicle and the distance that the vehicle has to travel for the destination (correlated with time spent travelling). This can be especially evident on the RTS bus system. With this model, an app/software could choose vehicles for passengers and create less congested and safer roads on campus.
