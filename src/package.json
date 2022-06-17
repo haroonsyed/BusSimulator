@@ -9,7 +9,7 @@
   "author": "Zachary Allen",
   "license": "ISC",
   "dependencies": {
-    "electron": "^9.1.2"
+    "electron": "^15.5.5"
   },
   "devDependencies": {
     "electron-packager": "^15.0.0"
